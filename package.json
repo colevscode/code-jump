@@ -1,6 +1,6 @@
 {
     "name": "column-jump",
-    "displayName": "column Jump",
+    "displayName": "Column Jump",
     "description": "Jump to the next non-empty column",
     "version": "0.0.1",
     "publisher": "CoenraadS",
