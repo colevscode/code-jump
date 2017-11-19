@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (!editor) { return; }
         const cursorPos = editor.selection.active;
 
-        for (let i = cursorPos.line - 1; i > 0; i--) {
+        for (let i = cursorPos.line - 1; i >= 0; i--) {
             if (jump(editor, cursorPos, i)) {
                 return;
             }
@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 function jump(editor: vscode.TextEditor, cursorPos: Position, i: number): boolean {
     const line = editor.document.lineAt(i);
-    if (!line.isEmptyOrWhitespace && line.firstNonWhitespaceCharacterIndex <= cursorPos.character) {
+    if (!line.isEmptyOrWhitespace && line.range.end.character >= cursorPos.character && line.firstNonWhitespaceCharacterIndex <= cursorPos.character) {
         const newPos = new Position(i, cursorPos.character);
         editor.revealRange(new Range(newPos, newPos));
         var newSelection = new vscode.Selection(newPos, newPos);
