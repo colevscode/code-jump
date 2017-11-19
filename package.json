@@ -1,9 +1,10 @@
 {
     "name": "column-jump",
     "displayName": "Column Jump",
-    "description": "Jump to the next non-empty column",
+    "description": "Jump to the next non-empty row in the same column",
     "version": "0.0.2",
     "publisher": "CoenraadS",
+    "icon": "images/icon.png",    
     "engines": {
         "vscode": "^1.18.0"
     },
@@ -19,11 +20,11 @@
         "commands": [
             {
                 "command": "column-jump.jumpUp",
-                "title": "Jump Up to non-empty column"
+                "title": "Jump Up Column"
             },
             {
                 "command": "column-jump.jumpDown",
-                "title": "Jump Down to non-empty column"
+                "title": "Jump Down Column"
             }
         ]
     },
