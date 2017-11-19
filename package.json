@@ -2,7 +2,7 @@
     "name": "column-jump",
     "displayName": "Column Jump",
     "description": "Jump to the next non-empty row in the same column",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "publisher": "CoenraadS",
     "icon": "images/icon.png",
     "engines": {
