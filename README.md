@@ -4,6 +4,7 @@
 * `column-jump.jumpDown`: Navigate cursor down to next non-empty column
 
 # Demo
+![Demo](/images/demo.gif)
 
 # Usage
 

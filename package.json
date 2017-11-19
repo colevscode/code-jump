@@ -2,7 +2,7 @@
     "name": "column-jump",
     "displayName": "Column Jump",
     "description": "Jump to the next non-empty column",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "CoenraadS",
     "engines": {
         "vscode": "^1.18.0"
@@ -39,11 +39,10 @@
         "vscode": "^1.1.6",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
-    }
-    ,
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/CoenraadS/column-jump"
     },
-    "license": "SEE LICENSE IN LICENSE.md"    
+    "license": "SEE LICENSE IN LICENSE.md"
 }
