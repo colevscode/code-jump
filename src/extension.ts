@@ -1,43 +1,76 @@
 'use strict';
 import * as vscode from 'vscode';
-import { Range, Position } from 'vscode';
+import { TextLine, Selection, TextEditor, Range, Position } from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('column-jump.jumpDown', () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) { return; }
-        const cursorPos = editor.selection.active;
-        const lineCount = editor.document.lineCount;
-        for (let i = cursorPos.line + 1; i < lineCount; i++) {
-            if (jump(editor, cursorPos, i)) {
-                return;
-            }
-        }
+
+        editor.selections = editor.selections
+            .map(sel => jumpDown(sel, editor))
+            .filter(sel => !!sel);
+
+        scrollFirstSelectionIntoView(editor);
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand('column-jump.jumpUp', () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) { return; }
-        const cursorPos = editor.selection.active;
 
-        for (let i = cursorPos.line - 1; i >= 0; i--) {
-            if (jump(editor, cursorPos, i)) {
-                return;
-            }
-        }
+        editor.selections = editor.selections
+            .map(sel => jumpUp(sel, editor))
+            .filter(sel => !!sel);
+
+        scrollFirstSelectionIntoView(editor);
     }));
 }
 
-function jump(editor: vscode.TextEditor, cursorPos: Position, i: number): boolean {
-    const line = editor.document.lineAt(i);
-    if (!line.isEmptyOrWhitespace && line.range.end.character >= cursorPos.character && line.firstNonWhitespaceCharacterIndex <= cursorPos.character) {
-        const newPos = new Position(i, cursorPos.character);
-        editor.revealRange(new Range(newPos, newPos));
-        var newSelection = new vscode.Selection(newPos, newPos);
-        editor.selection = newSelection;
-        return true;
+function jumpUp(selection: Selection, editor: TextEditor): Selection | undefined {
+    const cursorPos = selection.active,
+        char = cursorPos.character;
+
+    for (let i = cursorPos.line - 1; i >= 0; i--) {
+        if (isLineBlocking(editor.document.lineAt(i), char)) {
+            return makeSelection(i, char);
+        }
     }
-    return false;
+
+    return undefined;
+}
+
+function jumpDown(selection: Selection, editor: TextEditor): Selection | undefined {
+    const cursorPos = selection.active,
+        lineCount = editor.document.lineCount,
+        char = cursorPos.character;
+
+    for (let i = cursorPos.line + 1; i < lineCount; i++) {
+        if (isLineBlocking(editor.document.lineAt(i), char)) {
+            return makeSelection(i, char);
+        }
+    }
+
+    return undefined;
+}
+
+function isLineBlocking(line: TextLine, char: number): boolean {
+    return (!line.isEmptyOrWhitespace &&
+        line.range.end.character >= char &&
+        line.firstNonWhitespaceCharacterIndex <= char);
+}
+
+function makeSelection(line: number, char: number): Selection {
+    const newPos = new Position(line, char);
+    return new Selection(newPos, newPos);
+}
+
+function scrollFirstSelectionIntoView(editor: TextEditor) {
+    if (editor.selections.length < 1) {
+        return;
+    }
+
+    const pos = editor.selections[0].active;
+    editor.revealRange(new Range(pos, pos));
 }
 
 export function deactivate() {
