@@ -1,49 +1,49 @@
 {
-    "name": "column-jump",
-    "displayName": "Column Jump",
-    "description": "Jump to the next non-empty row in the same column",
-    "version": "0.0.4",
-    "publisher": "CoenraadS",
-    "icon": "images/icon.png",
-    "engines": {
-        "vscode": "^1.18.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "activationEvents": [
-        "onCommand:column-jump.jumpUp",
-        "onCommand:column-jump.jumpDown"
-    ],
-    "main": "./out/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "column-jump.jumpUp",
-                "title": "Jump Up Column"
-            },
-            {
-                "command": "column-jump.jumpDown",
-                "title": "Jump Down Column"
-            }
-        ]
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/CoenraadS/column-jump"
-    },
-    "license": "SEE LICENSE IN LICENSE.md"
+  "name": "code-jump",
+  "displayName": "Code Jump",
+  "description": "Jump to the next line of code",
+  "version": "0.0.4",
+  "publisher": "Cole Krumbholz",
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.18.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:code-jump.jumpUp",
+    "onCommand:code-jump.jumpDown"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "code-jump.JumpUp",
+        "title": "Jump Up"
+      },
+      {
+        "command": "code-jump.JumpDown",
+        "title": "Jump Down"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.6",
+    "@types/node": "^7.0.43",
+    "@types/mocha": "^2.2.42"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/colevscode/code-jump"
+  },
+  "license": "SEE LICENSE IN LICENSE.md"
 }
