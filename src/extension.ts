@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import { TextLine, Selection, TextEditor, Range, Position } from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
-    context.subscriptions.push(vscode.commands.registerCommand('column-jump.jumpDown', () => {
+    context.subscriptions.push(vscode.commands.registerCommand('code-jump.jumpDown', () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) { return; }
 
@@ -14,7 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
         scrollFirstSelectionIntoView(editor);
     }));
 
-    context.subscriptions.push(vscode.commands.registerCommand('column-jump.jumpUp', () => {
+    context.subscriptions.push(vscode.commands.registerCommand('code-jump.jumpUp', () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) { return; }
 
@@ -29,14 +29,14 @@ export function activate(context: vscode.ExtensionContext) {
 function jumpUp(selection: Selection, editor: TextEditor): Selection | undefined {
     const cursorPos = selection.active,
         char = cursorPos.character;
-
+        
     for (let i = cursorPos.line - 1; i >= 0; i--) {
-        if (isLineBlocking(editor.document.lineAt(i), char)) {
+        if (!editor.document.lineAt(i).isEmptyOrWhitespace) {
             return makeSelection(i, char);
         }
     }
 
-    return undefined;
+    return selection;
 }
 
 function jumpDown(selection: Selection, editor: TextEditor): Selection | undefined {
@@ -45,18 +45,12 @@ function jumpDown(selection: Selection, editor: TextEditor): Selection | undefin
         char = cursorPos.character;
 
     for (let i = cursorPos.line + 1; i < lineCount; i++) {
-        if (isLineBlocking(editor.document.lineAt(i), char)) {
+        if (!editor.document.lineAt(i).isEmptyOrWhitespace) {
             return makeSelection(i, char);
         }
     }
 
-    return undefined;
-}
-
-function isLineBlocking(line: TextLine, char: number): boolean {
-    return (!line.isEmptyOrWhitespace &&
-        line.range.end.character >= char &&
-        line.firstNonWhitespaceCharacterIndex <= char);
+    return selection;
 }
 
 function makeSelection(line: number, char: number): Selection {

@@ -19,12 +19,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "code-jump.JumpUp",
-        "title": "Jump Up"
+        "command": "code-jump.jumpUp",
+        "title": "Code Jump Up"
       },
       {
-        "command": "code-jump.JumpDown",
-        "title": "Jump Down"
+        "command": "code-jump.jumpDown",
+        "title": "Code Jump Down"
       }
     ]
   },
